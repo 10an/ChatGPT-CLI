@@ -39,9 +39,15 @@ def recieve():
     assistantOutput = apiOutput[0]
 
     if assistantOutput:
-        print("\n" + apiOutput + "\n")
+        print("\n" + str(apiOutput) + "\n")
         messages.append({"role": "assistant", "content": assistantOutput})
-        return assistantOutput
+        for message in messages:
+            if message["role"] == "assistant":
+                print(message["content"])
+            elif message["role"] == "user":
+                print(message["content"])
+        return "<p>" + assistantOutput + "</p>"
+    
 
 
 # Start Server
