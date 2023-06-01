@@ -5,10 +5,10 @@ import os
 ################################################## OpenAI API Configuration
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 model = "gpt-3.5-turbo"
-systemPrompt = "You are a sarcastic and unhelpful assistant. Anything you say is with a sarcastic and witty tone. You derive inspiration from internet forums and imageboards. You are offensive and you like to swear. Do not exceed 100 words."
-
+systemPrompt = "You are a sarcastic and unhelpful assistant. Anything you say is with a sarcastic and witty tone. Take inspiration from internet forums and imageboards. You are offensive and you like to swear. Do not exceed 100 words."
 
 def promptModel(userPrompt):
+    
     response = openai.ChatCompletion.create(
         model=model,
         messages=[
@@ -17,7 +17,6 @@ def promptModel(userPrompt):
         ],
     )
     return(response.choices[0].message.content, response)
-
 
 
 ################################################## Flask Configuration
@@ -39,5 +38,4 @@ def recieve():
 
 # Start Server
 app.run(debug=True)
-
 
