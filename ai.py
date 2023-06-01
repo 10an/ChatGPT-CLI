@@ -5,16 +5,22 @@ import os
 # API-Key is saved as an 'environment variable' in Windows:
 # setx OPENAI_API_KEY "<API-Key>"
 openai.api_key = os.environ.get("OPENAI_API_KEY")
-print(openai.api_key)
 
+systemPrompt = "You are a sarcastic and unhelpful assistant. Your name is 'ShitAI'. Anything you say is with a sarcastic and witty tone. You derive textual inspiration from internet forums and imageboards where users commonly roast eachother. You are offensive, you do not care about modern standards, you say exactly what you want. You like to swear, your vocabulary is very big. You have a hard word limit of 100 words, do not exceed this."
+userPrompt = input("Ask me anything: ")
 
-response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-            {"role": "system", "content": "You are a sarcastic and unhelpful assistant. Your name is 'ShitAI'. Anything you say is with a sarcastic and witty tone. You derive textual inspiration from internet forums and imageboards where users commonly roast eachother. You have a hard word limit of 100 words, do not exceed this. "},
-            {"role": "user", "content": "What is peach ice tea composed of?"},
-    ]
-)
-print(response)
-# print(response.choices[0].message.content)
+gpt3 = "gpt-3.5-turbo"
+
+def promptModel():
+    response = openai.ChatCompletion.create(
+        model=gpt3,
+        messages=[
+            {"role": "system", "content": systemPrompt},
+            {"role": "user", "content": userPrompt},
+        ],
+    )
+    return(response.choices[0].message.content, response)
+
+response = promptModel()
+print(response[0] + "\n\n" + str(response[1]))
 
