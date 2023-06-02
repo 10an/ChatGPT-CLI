@@ -8,24 +8,24 @@ To use ChatGPT-CLI, you need to meet the following requirements:
 
 - An OpenAI API key set as an environment variable. To set the API key, follow the instructions specific to your operating system:
 
-  - Windows:
+  - **Windows:**
     - Open a command prompt and run the following command:
 
-      ``` powershell
+      ```powershell
       setx OPENAI_API_KEY "<API-Key>"
       ```
 
     - Replace `<API-Key>` with your actual OpenAI API key.
 
-  - Linux:
+  - **Linux / Mac:**
     - Open a terminal and run the following command:
 
-      ``` bash
+      ```bash
       echo "export OPENAI_API_KEY='<API-Key>'" >> ~/.bashrc
       ```
 
     - Replace `<API-Key>` with your actual OpenAI API key.
-    - Restart the terminal or run `source ~/.bashrc` to apply the changes.
+    - Run `source ~/.bashrc` to apply the changes.
 
 - A terminal emulator with support for ASCII colors.
 <!-- - `flask` package -->
