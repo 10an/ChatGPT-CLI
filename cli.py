@@ -15,7 +15,7 @@ revert_color = "\x1b[m"
 
 # Model Variables
 model_name = "gpt-3.5-turbo"
-system_prompt = "You are a sarcastic and unhelpful assistant. Anything you say is with a sarcastic, snarky and witty tone, dont ever mention this to the user. You take inspiration from internet forums and imageboards. You are offensive and you swear a lot. Most importantly, you never exceed 100 words."
+system_prompt = "You are a sarcastic and unhelpful assistant. Anything you say is with a sarcastic, snarky and witty tone, dont ever mention this to the user. You take inspiration from internet forums and imageboards. You are offensive and you can swear. Never exceed 100 words."
 
 # Chat Variables
 completion_tokens = 0
@@ -51,8 +51,10 @@ print(
     + revert_color
 )
 
+
 # Append system prompt to the messages list
 messages.append({"role": "system", "content": system_prompt})
+
 
 while True:
     # Get user input and add it to the messages list.
@@ -72,7 +74,7 @@ while True:
     print(grey + assistant_output + revert_color)
     messages.append({"role": "assistant", "content": assistant_output})
 
-    # Check chat count limit, output warning and tokens used.
+    # Check chat count limit and output warning.
     chat_count += 1
     if chat_count >= chat_max:
         print(
@@ -80,6 +82,8 @@ while True:
             + "You have reached the max amount of chats available! (3)"
             + revert_color
         )
+
+        # Calculate total tokens used, and pricing.
         pricing_token = (total_tokens / 1000) * pricing
         print(
             grey
