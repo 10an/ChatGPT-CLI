@@ -1,24 +1,22 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, request
 import openai
 import os
 
 ################################################## OpenAI API Configuration
-openai.api_key = os.environ.get("OPENAI_API_KEY")
-model = "gpt-3.5-turbo"
-systemPrompt = "You are a sarcastic and unhelpful assistant. Anything you say is with a sarcastic and witty tone. Take inspiration from internet forums and imageboards. You are offensive and you like to swear. Do not exceed 100 words."
+messages = []
+
+# Model Variables
+model_name = "gpt-3.5-turbo"
+system_prompt = "Say Hello Only!"
 
 
-def promptModel(messages):
+# Function to prompt the OpenAI model with a list of messages and return the generated response.
+def prompt_model(messages):
     response = openai.ChatCompletion.create(
-        model=model,
+        model=model_name,
         messages=messages,
     )
     return (response.choices[0].message.content, response)
-
-
-messages = [
-    {"role": "system", "content": systemPrompt},
-]
 
 
 ################################################## Flask Configuration
@@ -30,24 +28,15 @@ def index():
     return render_template("/index.html")
 
 
-@app.route("/chat", methods=["POST"])
-def recieve():
-    userPrompt = request.form.get("userPrompt")
-    messages.append({"role": "user", "content": userPrompt})
+@app.route("/", methods=["POST"])
+def recieve_prompt():
+    user_message = request.form.get("userprompt")
+    messages.append({"role": "user", "content": user_message})
 
-    apiOutput = promptModel(messages)
-    assistantOutput = apiOutput[0]
+    assistant_message = prompt_model(messages)[0]
+    messages.append({"role": "assistant", "content": assistant_message})
 
-    if assistantOutput:
-        print("\n" + str(apiOutput) + "\n")
-        messages.append({"role": "assistant", "content": assistantOutput})
-        for message in messages:
-            if message["role"] == "assistant":
-                print(message["content"])
-            elif message["role"] == "user":
-                print(message["content"])
-        return "<p>" + assistantOutput + "</p>"
-    
+    return render_template("index.html", messages=messages)
 
 
 # Start Server
