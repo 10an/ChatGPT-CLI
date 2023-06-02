@@ -31,7 +31,7 @@ chat_max = 3
 
 
 # Function to prompt the OpenAI model with a list of messages and return the generated response.
-def promptModel(messages):
+def prompt_model(messages):
     response = openai.ChatCompletion.create(
         model=model_name,
         messages=messages,
@@ -62,7 +62,7 @@ while True:
     messages.append({"role": "user", "content": user_prompt})
 
     # Get assistant output
-    api_output = promptModel(messages)[1]
+    api_output = prompt_model(messages)[1]
     assistant_output = api_output.choices[0].message.content
 
     # Calculate tokens
