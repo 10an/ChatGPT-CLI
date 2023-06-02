@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>sHITbOT</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>app.py</title>
+  </head>
+  <body>
+    <h1>Chatbot</h1>
     <main>
-        <div class="assistant">Example Assistant Message!</div>
-        <div class="user">Example User Message.</div>
+      <div class="chat-container">
+        <div class="chats">
+          {% for message in messages %} {% if message.role == "user" %}
+          <div class="user-message">{{ message.content}}</div>
+          {% elif message.role == "assistant" %}
+          <div class="assistant-message">{{ message.content}}</div>
+          {% endif %} {% endfor %}
+        </div>
+        <form action="{{ url_for('recieve_prompt') }}" method="post">
+          <textarea id="userprompt" name="userprompt" type="text"></textarea>
+          <input type="submit" />
+        </form>
+      </div>
     </main>
-    <form action="{{ url_for('recieve') }}" method="post">
-        <textarea id="userPrompt" name="userPrompt" type="text"></textarea>
-        <input type="submit">
-    </form>
-</body>
+  </body>
 </html>
